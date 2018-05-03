@@ -9,10 +9,26 @@ const jwt = require('jsonwebtoken');
 
 const config = require('../config');
 const router = express.Router();
-const { localAuth, createAuthToken } = require('../authConfig')
 
 
 router.use(bodyParser.json());
+
+router.get('/', (req, res) => {
+    console.log("fetching feedback templates");
+    Blog
+      .find()
+      .then(blog => {
+        console.log(blog);
+        res.json({
+          blogs: blog.map(
+            (blog) => blog.serialize())
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
+  });
 
 
 router.get('/:topicId', (req, res) => {
@@ -34,7 +50,7 @@ router.get('/:topicId', (req, res) => {
 router.post('/', (req, res) => {
   const requiredFields = ['topicId', 'authorId', 'title', 'content'];
   for (let i = 0; i < requiredFields.length; i++) {
-
+    console.log(req)
     const field = requiredFields[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`;
@@ -44,7 +60,7 @@ router.post('/', (req, res) => {
   }
     Blog
     .create({
-      topicID: req.body.topicId,
+      topicId: req.body.topicId,
       authorId: req.body.authorId,
       title: req.body.title,
       content: req.body.content

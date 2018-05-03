@@ -22,7 +22,7 @@ const blogSchema = mongoose.Schema({
   },
   popularity: { 
     type: Number, 
-    default: "0"
+    default: 0
   },
   created: {
     type: Date, 

@@ -9,7 +9,6 @@ const jwt = require('jsonwebtoken');
 
 const config = require('../config');
 const router = express.Router();
-const { localAuth, createAuthToken } = require('../authConfig')
 
 
 router.use(bodyParser.json());
