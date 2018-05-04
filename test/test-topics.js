@@ -8,7 +8,7 @@ mongoose.Promise = global.Promise;
 const should = chai.should();
 const expect = chai.expect
 
-const { Topic } = require('../Topics');
+const { Topic } = require('../topics');
 const { closeServer, runServer, app } = require('../server');
 const { TEST_DATABASE_URL } = require('../config');
 
