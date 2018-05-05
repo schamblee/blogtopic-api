@@ -30,9 +30,8 @@ function seedTopicData() {
   for (let i = 1; i <= 10; i++) {
     seedData.push({
       authorId: faker.name.firstName(),
-      topicId: faker.lorem.words(),
-      title: faker.name.firstName(),
-      content: faker.name.firstName()
+      topicName: faker.name.firstName(),
+      createDate: faker.name.firstName()
     });
 
   return Topic.insertMany(seedData);
@@ -43,11 +42,12 @@ function seedTopicData() {
 describe('Topic API resource', function () {
 
   before(function () {
-    return runServer(TEST_DATABASE_URL, 5678);
+    return runServer(TEST_DATABASE_URL);
+    
   });
 
   beforeEach(function () {
-    return seedTopicData();
+   // return seedTopicData();
   });
 
   afterEach(function () {
@@ -69,22 +69,21 @@ describe('Topic API resource', function () {
       //       in db.
       let res;
       return chai.request(app)
-        .get('/api/Topics')
-        .then(_res => {
-          res = _res;
-          res.should.have.status(200);
+        .get('/api/topics/')
+        .then((res) => {
+          console.log(res)
+          expect(res).to.have.status(200);
           // otherwise our db seeding didn't work
-          res.body.Topic.should.have.length.of.at.least(1);
 
           return Topic.count();
         })
         .then(count => {
           // the number of returned Topics should be same
           // as number of Topics in DB
-          expect(res.body.Topic).to.have.lengthOf(count);
+          expect(res.body.topic).to.have.lengthOf(count);
         })
     });
-  });
+  }); 
 
 describe('PUT endpoint', function () {
 
@@ -102,7 +101,7 @@ describe('PUT endpoint', function () {
         .then(Topic => {
           updateData.id = Topic.id;
           return chai.request(app)
-            .put(`/api/Topics/${Topic.id}`)
+            .put(`/api/topics/${Topic.id}`)
             .send(updateData);
         })
         .then(res => {
@@ -144,4 +143,4 @@ describe('PUT endpoint', function () {
         });
     });
   });
-});*/
+}); */

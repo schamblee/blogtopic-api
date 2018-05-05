@@ -26,6 +26,7 @@ describe('/api/user', function () {
 
   before(function () {
     return runServer(TEST_DATABASE_URL);
+    resolve()
   });
 
   after(function () {
