@@ -15,14 +15,13 @@ router.use(bodyParser.json());
 
 
 router.get('/', (req, res) => {
+  let filter = req.query.filterName || ''
   Topic
-    .find()
+    .find({topicName: new RegExp(filter, 'i')})
     .then(topic => {
-      console.log(topic);
-      res.json({
-        topics: topic.map(
+      res.json( topic.map(
           (topic) => topic.serialize())
-      });
+      );
     })
     .catch(err => {
       console.error(err);

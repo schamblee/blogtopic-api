@@ -13,16 +13,15 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-router.get('/', (req, res) => {
-    console.log("fetching feedback templates");
+router.get('/:authorId', (req, res) => {
     Blog
-      .find()
+      .find({authorId: req.params.authorId})
       .then(blog => {
         console.log(blog);
-        res.json({
-          blogs: blog.map(
+        res.json(
+          blog.map(
             (blog) => blog.serialize())
-        });
+        );
       })
       .catch(err => {
         console.error(err);
@@ -30,12 +29,10 @@ router.get('/', (req, res) => {
       });
   });
 
-
-router.get('/:topicId', (req, res) => {
+router.get('/topic/:topicId', (req, res) => {
   Blog
     .find({topicId: req.params.topicId})
     .then(blog => {
-      console.log(blog);
       res.json({
         blogs: blog.map(
           (blog) => blog.serialize())
@@ -50,7 +47,6 @@ router.get('/:topicId', (req, res) => {
 router.post('/', (req, res) => {
   const requiredFields = ['topicId', 'authorId', 'title', 'content'];
   for (let i = 0; i < requiredFields.length; i++) {
-    console.log(req)
     const field = requiredFields[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`;
