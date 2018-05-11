@@ -4,10 +4,6 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const topicSchema = mongoose.Schema({
-  authorId: { 
-    type: String, 
-    required: true
-  },
   topicName: { 
     type: String, 
     required: true
@@ -21,7 +17,6 @@ const topicSchema = mongoose.Schema({
 topicSchema.methods.serialize = function() {
   return {
     id: this._id,
-    authorId: this.authorId,
     topicName: this.topicName,
     created: this.created
   };

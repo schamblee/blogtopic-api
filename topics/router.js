@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const requiredFields = ['authorId', 'topicName'];
+  const requiredFields = ['topicName'];
   for (let i = 0; i < requiredFields.length; i++) {
 
     const field = requiredFields[i];
@@ -42,7 +42,6 @@ router.post('/', (req, res) => {
   }
     Topic
     .create({
-      authorId: req.body.authorId,
       topicName: req.body.topicName
     })
     .then(topic => res.status(201).json(topic.serialize()))
