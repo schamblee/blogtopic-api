@@ -29,6 +29,19 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/topic/:id', (req, res) => {
+  let filter = req.query.filterName || ''
+  Topic
+  .findById(req.params.id)
+    .then(topic => {
+      res.json( topic.serialize())
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
 router.post('/', (req, res) => {
   const requiredFields = ['topicName'];
   for (let i = 0; i < requiredFields.length; i++) {

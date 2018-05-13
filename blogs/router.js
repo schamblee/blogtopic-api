@@ -13,9 +13,9 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-router.get('/:authorId', (req, res) => {
+router.get('/user/:username', (req, res) => {
     Blog
-      .find({authorId: req.params.authorId})
+      .find({username: req.params.username})
       .then(blog => {
         console.log(blog);
         res.json(
@@ -29,14 +29,26 @@ router.get('/:authorId', (req, res) => {
       });
   });
 
+  router.get('/:id', (req, res) => {
+    Blog
+      .findById(req.params.id)
+      .then(blog => {
+        res.json( blog.serialize())
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
+  });
+
 router.get('/topic/:topicId', (req, res) => {
   Blog
     .find({topicId: req.params.topicId})
     .then(blog => {
-      res.json({
-        blogs: blog.map(
+      res.json(
+        blog.map(
           (blog) => blog.serialize())
-      });
+      );
     })
     .catch(err => {
       console.error(err);
@@ -45,7 +57,7 @@ router.get('/topic/:topicId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const requiredFields = ['topicId', 'authorId', 'title', 'content'];
+  const requiredFields = ['topicId', 'username', 'title', 'content'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
     if (!(field in req.body)) {
@@ -57,7 +69,7 @@ router.post('/', (req, res) => {
     Blog
     .create({
       topicId: req.body.topicId,
-      authorId: req.body.authorId,
+      username: req.body.username,
       title: req.body.title,
       content: req.body.content
     })

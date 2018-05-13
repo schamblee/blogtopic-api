@@ -8,7 +8,7 @@ const blogSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  authorId: { 
+  username: { 
     type: String, 
     required: true
   },
@@ -34,7 +34,7 @@ blogSchema.methods.serialize = function() {
   return {
     id: this._id,
     topicId: this.topicId,
-    authorId: this.authorId,
+    username: this.username,
     title: this.title,
     content: this.content,
     popularity: this.popularity,
