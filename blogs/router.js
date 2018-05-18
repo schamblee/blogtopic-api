@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const router = express.Router();
 
-
 router.use(bodyParser.json());
 
 router.get('/user/:username', (req, res) => {
@@ -28,6 +27,7 @@ router.get('/user/:username', (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
       });
   });
+
 
   router.get('/:id', (req, res) => {
     Blog
