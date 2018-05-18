@@ -28,7 +28,6 @@ router.get('/user/:username', (req, res) => {
       });
   });
 
-
   router.get('/:id', (req, res) => {
     Blog
       .findById(req.params.id)
