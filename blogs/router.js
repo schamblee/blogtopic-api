@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const router = express.Router();
 
-
 router.use(bodyParser.json());
 
 router.get('/user/:username', (req, res) => {
