@@ -16,7 +16,6 @@ router.get('/user/:username', (req, res) => {
     Blog
       .find({username: req.params.username})
       .then(blog => {
-        console.log(blog);
         res.json(
           blog.map(
             (blog) => blog.serialize())
